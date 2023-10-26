@@ -1,2 +1,3 @@
 - 工程搭建：https://blog.csdn.net/whhcsdn233/article/details/132092077
 - 代码裁剪：https://zhuanlan.zhihu.com/p/397742240
+- 修改晶振：https://blog.csdn.net/Mark_md/article/details/100096505
