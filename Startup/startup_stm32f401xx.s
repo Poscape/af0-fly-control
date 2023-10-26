@@ -173,7 +173,8 @@ __Vectors_Size  EQU  __Vectors_End - __Vectors
 ; Reset handler
 Reset_Handler    PROC
                  EXPORT  Reset_Handler             [WEAK]
-        IMPORT  SystemInit
+		;system_stm32f4xx.c
+		IMPORT  SystemInit
         IMPORT  __main
 
                  LDR     R0, =SystemInit
