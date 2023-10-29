@@ -32,11 +32,11 @@ void InitTask(void *p_arg)
 {
 	OLED_Init();
 	InitLED();
-	// Tim_Init();
+	Tim_Init();
 	MyI2C_Init();
 	MPU6050Init();
 	
-	// OSTaskCreate(TimTask, NULL, &TimTaskStk[99], 3);
+	OSTaskCreate(TimTask, NULL, &TimTaskStk[99], 3);
 	OSTaskCreate(MPU6050Task, NULL, &GY86TaskStk[99], 4);
 	OSTaskCreate(OledTask, NULL, &OledTaskStk[99], 5);
 	OSTaskCreate(TestTask1, NULL, &TestTaskStk1[99], 7);

@@ -2,6 +2,8 @@
 #define __TIM_H_
 
 #include "stm32f4xx.h"
+#include "os_cpu.h"
+#include "ucos_ii.h"
 
 void Tim_Init();
 void TIM3_PPM_Init(void);

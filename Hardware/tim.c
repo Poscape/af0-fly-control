@@ -1,5 +1,4 @@
 #include "tim.h"
-#include "stm32f4xx.h"
 
 // 定义全局变量，存储接收到的PPM数据
 volatile uint16_t ppmData[7], ppm_CCR1data[7];
@@ -16,6 +15,11 @@ uint32_t arr = 0XFFFF;
 
 void TIM3_IRQHandler(void)
 {
+		OS_CPU_SR  cpu_sr;
+    OS_ENTER_CRITICAL();
+    OSIntNesting++;
+    OS_EXIT_CRITICAL();
+	
     if (TIM3->SR & TIM_SR_CC1IF)
     {
         static uint8_t ppmChannel = 0;
@@ -25,12 +29,19 @@ void TIM3_IRQHandler(void)
 
         TIM3->SR &= ~TIM_SR_CC1IF;
 
+        uint32_t timeout = 10000;
+
         if (ppmChannel < 7)
         {
             // 检测到PPM帧起始信号，重置计数器
             TIM3->CNT = 0;
             while ((TIM3->SR & TIM_SR_CC1IF) == 0)
-                ;
+            {
+                if (--timeout == 0)
+                {
+                    return;
+                }
+            }
             if (TIM3->SR & TIM_SR_CC1IF)
             {
                 TIM3->SR &= ~TIM_SR_CC1IF;
@@ -72,6 +83,7 @@ void TIM3_IRQHandler(void)
             ppmChannel = 0;
         }
     }
+		OSIntExit();
 }
 
 // 配置TIM1用于PWM输出
