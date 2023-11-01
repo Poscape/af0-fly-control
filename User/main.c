@@ -30,11 +30,12 @@ int main(void)
 
 void InitTask(void *p_arg)
 {
-	OLED_Init();
+	
 	InitLED();
 	Tim_Init();
-	MyI2C_Init();
-	MPU6050Init();
+	//MyI2C_Init();
+	MPU6050_Init();
+	OLED_Init();
 	
 	OSTaskCreate(TimTask, NULL, &TimTaskStk[99], 3);
 	OSTaskCreate(MPU6050Task, NULL, &GY86TaskStk[99], 4);

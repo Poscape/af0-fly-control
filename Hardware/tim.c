@@ -15,10 +15,6 @@ uint32_t arr = 0XFFFF;
 
 void TIM3_IRQHandler(void)
 {
-		OS_CPU_SR  cpu_sr;
-    OS_ENTER_CRITICAL();
-    OSIntNesting++;
-    OS_EXIT_CRITICAL();
 	
     if (TIM3->SR & TIM_SR_CC1IF)
     {
@@ -83,7 +79,6 @@ void TIM3_IRQHandler(void)
             ppmChannel = 0;
         }
     }
-		OSIntExit();
 }
 
 // 配置TIM1用于PWM输出

@@ -152,34 +152,34 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>558</LineNumber>
+          <LineNumber>108</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223280</Address>
+          <Address>134221220</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Ucosii\Source\os_task.c</Filename>
+          <Filename>..\User\tasks.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\AF0Fly\../Ucosii/Source/os_task.c\558</Expression>
+          <Expression>\\AF0Fly\../User/tasks.c\108</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>1727</LineNumber>
+          <LineNumber>389</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134226284</Address>
+          <Address>134219724</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Ucosii\Source\os_core.c</Filename>
+          <Filename>..\Hardware\i2c.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\AF0Fly\../Ucosii/Source/os_core.c\1727</Expression>
+          <Expression>\\AF0Fly\../Hardware/i2c.c\389</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -197,6 +197,26 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>OSPrioHighRdy</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>OSIntNesting</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>OSTime</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>data</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>data</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -1412,30 +1432,6 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Hardware\gy86.c</PathWithFileName>
-      <FilenameWithoutPath>gy86.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>5</GroupNumber>
-      <FileNumber>95</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\Hardware\gy86.h</PathWithFileName>
-      <FilenameWithoutPath>gy86.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>5</GroupNumber>
-      <FileNumber>96</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
       <PathWithFileName>..\Hardware\i2c.c</PathWithFileName>
       <FilenameWithoutPath>i2c.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -1443,7 +1439,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>97</FileNumber>
+      <FileNumber>95</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1455,7 +1451,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>98</FileNumber>
+      <FileNumber>96</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1467,7 +1463,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>99</FileNumber>
+      <FileNumber>97</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1479,7 +1475,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>100</FileNumber>
+      <FileNumber>98</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1491,7 +1487,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>101</FileNumber>
+      <FileNumber>99</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1503,7 +1499,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>102</FileNumber>
+      <FileNumber>100</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1515,7 +1511,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>103</FileNumber>
+      <FileNumber>101</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1527,7 +1523,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>104</FileNumber>
+      <FileNumber>102</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1539,7 +1535,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>105</FileNumber>
+      <FileNumber>103</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1551,7 +1547,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>106</FileNumber>
+      <FileNumber>104</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1561,11 +1557,35 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>105</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Hardware\gy86.c</PathWithFileName>
+      <FilenameWithoutPath>gy86.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>106</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\Hardware\gy86.h</PathWithFileName>
+      <FilenameWithoutPath>gy86.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
     <GroupName>Ucosii</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

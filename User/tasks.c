@@ -12,6 +12,9 @@ OS_STK TestTaskStk2[100];
 OS_STK TestTaskStk3[100];
 OS_STK TestTaskStk4[100];
 
+uint16_t data;
+
+
 void TestTask1(void *p_arg)
 {
 	while(1){
@@ -53,15 +56,14 @@ void TestTask4(void *p_arg)
 void OledTask(void *p_arg)
 {
 	while(1){
-		OLED_ShowString(1,1,"CH1:");
-		OLED_ShowString(1,8,"CH2:");
-		OLED_ShowString(2,1,"CH3:");
-		OLED_ShowString(2,8,"CH4:");
-		for(int i=0;i<1000000;i++);
-		OLED_ShowNum(1,5,dutyCycleArray[0],3);
-		OLED_ShowNum(1,12,dutyCycleArray[1],3);
-		OLED_ShowNum(2,5,dutyCycleArray[2],3);
-		OLED_ShowNum(2,12,dutyCycleArray[3],3);
+		OLED_ShowString(1,1,"CurPri:");
+		OLED_ShowNum(1,8,OSPrioCur,8);
+		OLED_ShowString(2,1,"HiRdy:");
+		OLED_ShowNum(2,8,OSPrioHighRdy,8);
+		OLED_ShowString(3,1,"OSTIME:");
+		OLED_ShowNum(3,8,OSTime,8);
+		OLED_ShowString(4,1,"6050X:");
+		OLED_ShowNum(4,8,data,8);
 		OSTimeDly(30);
 	}
 }
@@ -102,9 +104,7 @@ void MPU6050Task(void *p_arg)
 {
 	while(1){
 		INT32U tick1 = OSTimeGet();
-		x = Get_MPU6050X();
-		y = Get_MPU6050Y();
-		z = Get_MPU6050Z();
+		data = I2C1_GetMPU6050X();
 		INT32U tick2 = OSTimeGet();
 		INT32U tick3 = tick2 - tick1;
 		OSTimeDly(15);

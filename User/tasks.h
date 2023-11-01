@@ -26,6 +26,9 @@ extern OS_STK TestTaskStk2[];
 extern OS_STK TestTaskStk3[];
 extern OS_STK TestTaskStk4[];
 
+extern INT8U OSPrioCur;
+extern INT8U OSPrioHighRdy;  
+
 void OledTask(void *p_arg);
 void TimTask(void *p_arg);
 void MotorInitTask(void *p_arg);
