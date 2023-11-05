@@ -1,6 +1,8 @@
 #include "tasks.h"
 
-uint16_t x = 0, y = 0, z = 0;
+uint16_t accx = 0, accy = 0, accz = 0;
+uint16_t gyrox = 0, gyroy = 0, gyroz = 0;
+uint16_t magx = 0, magy = 0, magz = 0;
 
 OS_STK OledTaskStk[100];
 OS_STK TimTaskStk[100];
@@ -56,14 +58,28 @@ void TestTask4(void *p_arg)
 void OledTask(void *p_arg)
 {
 	while(1){
-		OLED_ShowString(1,1,"CurPri:");
-		OLED_ShowNum(1,8,OSPrioCur,8);
-		OLED_ShowString(2,1,"HiRdy:");
-		OLED_ShowNum(2,8,OSPrioHighRdy,8);
-		OLED_ShowString(3,1,"OSTIME:");
-		OLED_ShowNum(3,8,OSTime,8);
-		OLED_ShowString(4,1,"6050X:");
-		OLED_ShowNum(4,8,data,8);
+//		OLED_ShowString(1,1,"CurPri:");
+//		OLED_ShowNum(1,8,OSPrioCur,8);
+//		OLED_ShowString(2,1,"HiRdy:");
+//		OLED_ShowNum(2,8,OSPrioHighRdy,8);
+		OLED_ShowString(1,1,"T:");
+		OLED_ShowNum(1,3,OSTime,5);
+
+		OLED_ShowString(2,1,"X:");
+		OLED_ShowNum(2,3,accx,4);
+		OLED_ShowNum(2,8,gyrox,4);
+		OLED_ShowNum(2,13,magx,4);
+
+		OLED_ShowString(3,1,"Y:");
+		OLED_ShowNum(3,3,accy,4);
+		OLED_ShowNum(3,8,gyroy,4);
+		OLED_ShowNum(3,13,magy,4);
+
+		OLED_ShowString(4,1,"Z:");
+		OLED_ShowNum(4,3,accz,4);
+		OLED_ShowNum(4,8,gyroz,4);
+		OLED_ShowNum(4,13,magz,4);
+
 		OSTimeDly(30);
 	}
 }
@@ -104,7 +120,15 @@ void MPU6050Task(void *p_arg)
 {
 	while(1){
 		INT32U tick1 = OSTimeGet();
-		data = I2C1_GetMPU6050X();
+		accx = I2C1_GetMPU6050X();
+		accy = I2C1_GetMPU6050Y();
+		accz = I2C1_GetMPU6050Z();
+		gyrox = I2C1_GetGyroX();
+		gyroy = I2C1_GetGyroY();
+		gyroz = I2C1_GetGyroZ();
+		magx = I2C1_GetHMC5883X();
+		magy = I2C1_GetHMC5883Y();
+		magz = I2C1_GetHMC5883Z();
 		INT32U tick2 = OSTimeGet();
 		INT32U tick3 = tick2 - tick1;
 		OSTimeDly(15);
