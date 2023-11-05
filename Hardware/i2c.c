@@ -170,6 +170,9 @@ uint16_t I2C1_Read_2Byte_Register(uint8_t DeviceAddr, uint8_t RegisterAddr)
     uint16_t data = 0;
     uint8_t dataH, dataL = 0;
 
+		I2C1_SendACK(ENABLE);
+		I2C1_SetStop(DISABLE);
+	
     I2C1_CheckBUSY();
 
     I2C1_SetStart(ENABLE);

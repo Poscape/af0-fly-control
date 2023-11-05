@@ -4,6 +4,9 @@ uint16_t accx = 0, accy = 0, accz = 0;
 uint16_t gyrox = 0, gyroy = 0, gyroz = 0;
 uint16_t magx = 0, magy = 0, magz = 0;
 
+INT32U gy86_time = 0;
+
+
 OS_STK OledTaskStk[100];
 OS_STK TimTaskStk[100];
 OS_STK MotorTaskStk[100];
@@ -58,12 +61,11 @@ void TestTask4(void *p_arg)
 void OledTask(void *p_arg)
 {
 	while(1){
-//		OLED_ShowString(1,1,"CurPri:");
-//		OLED_ShowNum(1,8,OSPrioCur,8);
-//		OLED_ShowString(2,1,"HiRdy:");
-//		OLED_ShowNum(2,8,OSPrioHighRdy,8);
 		OLED_ShowString(1,1,"T:");
 		OLED_ShowNum(1,3,OSTime,5);
+		
+		OLED_ShowString(1,9,"COS:");
+		OLED_ShowNum(1,13,gy86_time,4);
 
 		OLED_ShowString(2,1,"X:");
 		OLED_ShowNum(2,3,accx,4);
@@ -130,7 +132,7 @@ void MPU6050Task(void *p_arg)
 		magy = I2C1_GetHMC5883Y();
 		magz = I2C1_GetHMC5883Z();
 		INT32U tick2 = OSTimeGet();
-		INT32U tick3 = tick2 - tick1;
-		OSTimeDly(15);
+		gy86_time = tick2 - tick1;
+		OSTimeDly(30);
 	}
 }

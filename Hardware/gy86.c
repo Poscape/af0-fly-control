@@ -135,20 +135,20 @@ uint16_t I2C1_GetGyroZ(void)
 uint16_t I2C1_GetHMC5883X(void)
 {
     uint16_t data = 0;
-    data = I2C1_Read_2Byte_Register(HMC5883_Addr, OutputXMSB);
+    data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputXMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputXLSB);
     return data;
 }
 
 uint16_t I2C1_GetHMC5883Y(void)
 {
     uint16_t data = 0;
-    data = I2C1_Read_2Byte_Register(HMC5883_Addr, OutputYMSB);
+    data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputYMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputYLSB);
     return data;
 }
 
 uint16_t I2C1_GetHMC5883Z(void)
 {
     uint16_t data = 0;
-    data = I2C1_Read_2Byte_Register(HMC5883_Addr, OutputZMSB);
+    data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputZMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputZLSB);
     return data;
 }
