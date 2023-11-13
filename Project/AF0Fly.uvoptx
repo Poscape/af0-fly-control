@@ -153,7 +153,7 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>SystemCoreClock</ItemText>
+          <ItemText>SystemCoreClock,0x10</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
@@ -179,6 +179,11 @@
           <count>5</count>
           <WinNumber>1</WinNumber>
           <ItemText>data</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>gy86_time</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
