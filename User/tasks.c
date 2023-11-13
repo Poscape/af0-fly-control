@@ -1,138 +1,246 @@
 #include "tasks.h"
 
-uint16_t accx = 0, accy = 0, accz = 0;
-uint16_t gyrox = 0, gyroy = 0, gyroz = 0;
-uint16_t magx = 0, magy = 0, magz = 0;
+int16_t accx = 0, accy = 0, accz = 0;
+int16_t gyrox = 0, gyroy = 0, gyroz = 0;
+int16_t magx = 0, magy = 0, magz = 0;
 
+extern int dutyCycleArray[6];
+
+/* Time */
 INT32U gy86_time = 0;
+INT32U kalman_time = 0;
+INT32U send_time = 0;
 
+INT32U inner_loop_time = 0;
+INT32U motor_time = 0;
 
-OS_STK OledTaskStk[100];
-OS_STK TimTaskStk[100];
-OS_STK MotorTaskStk[100];
+INT32U outer_loop_time = 0;
+/* Time End */
+
+/* Task Stacks */
 OS_STK GY86TaskStk[100];
+OS_STK KalmanTaskStk[300];
+OS_STK SendTaskStk[100];
+OS_STK OLEDTaskStk[100];
 
-OS_STK TestTaskStk1[100];
-OS_STK TestTaskStk2[100];
-OS_STK TestTaskStk3[100];
-OS_STK TestTaskStk4[100];
+OS_STK InnerLoopTaskStk[100];
+OS_STK MotorTaskStk[100];
 
-uint16_t data;
+OS_STK OuterLoopTaskStk[100];
+OS_STK BlinkTaskStk[100];
+/* Task Stacks End */
 
+/*
+*********************************************************************************************************
+*                                             1000Hz TASKS
+*
+* Includes:
+* 1. GY86Task
+* 2. KalmanTask
+* 3. SendTask
+* 4. OLEDTask
+*********************************************************************************************************
+*/
 
-void TestTask1(void *p_arg)
+void GY86Task(void *p_arg)
 {
-	while(1){
-		LED_On();
-		delay_ms(100000000);
-		OSTimeDly(10);
-	}
-}
-
-void TestTask2(void *p_arg)
-{
-	while(1){
-		LED_Off();
-		OSTimeDly(10);
-	}
-}
-
-
-void TestTask3(void *p_arg)
-{
-	while(1){
-		SendString("abc\r\n");
-		OSTimeDly(100);
-	}
-}
-
-
-void TestTask4(void *p_arg)
-{
-	while(1){
-		OLED_ShowChar(2,2,ReadByte());
-		for(int i=0;i<10000000;i++);
-		OLED_Clear();
-		OSTimeDly(100);
-	}
-}
-
-
-void OledTask(void *p_arg)
-{
-	while(1){
-		OLED_ShowString(1,1,"T:");
-		OLED_ShowNum(1,3,OSTime,5);
-		
-		OLED_ShowString(1,9,"COS:");
-		OLED_ShowNum(1,13,gy86_time,4);
-
-		OLED_ShowString(2,1,"X:");
-		OLED_ShowNum(2,3,accx,4);
-		OLED_ShowNum(2,8,gyrox,4);
-		OLED_ShowNum(2,13,magx,4);
-
-		OLED_ShowString(3,1,"Y:");
-		OLED_ShowNum(3,3,accy,4);
-		OLED_ShowNum(3,8,gyroy,4);
-		OLED_ShowNum(3,13,magy,4);
-
-		OLED_ShowString(4,1,"Z:");
-		OLED_ShowNum(4,3,accz,4);
-		OLED_ShowNum(4,8,gyroz,4);
-		OLED_ShowNum(4,13,magz,4);
-
-		OSTimeDly(30);
-	}
-}
-
-
-void TimTask(void *p_arg)
-{
-	while(1){
-		PWM_output();
-		OSTimeDly(15);
-	}
-	
-}
-
-
-void MotorInitTask(void *p_arg)
-{
-	
-	setPWMDutyCycle(TIM1, 1,  80);
-	setPWMDutyCycle(TIM1, 2,  80);
-	setPWMDutyCycle(TIM1, 3,  80);
-	setPWMDutyCycle(TIM1, 4,  80);
-	delay_ms(1000000000);
-	delay_ms(1000000000);
-	delay_ms(1000000000);
-	
-	setPWMDutyCycle(TIM1, 1,  60);
-	setPWMDutyCycle(TIM1, 2,  60);
-	setPWMDutyCycle(TIM1, 3,  60);
-	setPWMDutyCycle(TIM1, 4,  60);
-	delay_ms(1000000000/2);
-	delay_ms(1000000000);
-	OSTaskDel(1);
-}
-
-
-void MPU6050Task(void *p_arg)
-{
-	while(1){
+	// Gy86: MPU6050(Accelerometer, Gyroscope), HMC5883(Magnetometer)
+	while (1)
+	{
 		INT32U tick1 = OSTimeGet();
-		accx = I2C1_GetMPU6050X();
-		accy = I2C1_GetMPU6050Y();
-		accz = I2C1_GetMPU6050Z();
-		gyrox = I2C1_GetGyroX();
-		gyroy = I2C1_GetGyroY();
-		gyroz = I2C1_GetGyroZ();
-		magx = I2C1_GetHMC5883X();
-		magy = I2C1_GetHMC5883Y();
-		magz = I2C1_GetHMC5883Z();
+
+		accx = (int16_t)I2C1_GetAccX();
+		accy = (int16_t)I2C1_GetAccY();
+		accz = (int16_t)I2C1_GetAccZ();
+
+		gyrox = (int16_t)I2C1_GetGyroX();
+		gyroy = (int16_t)I2C1_GetGyroY();
+		gyroz = (int16_t)I2C1_GetGyroZ();
+
+		magx = (int16_t)I2C1_GetMagX();
+		magy = (int16_t)I2C1_GetMagY();
+		magz = (int16_t)I2C1_GetMagZ();
+
 		INT32U tick2 = OSTimeGet();
 		gy86_time = tick2 - tick1;
-		OSTimeDly(30);
+
+		OSTimeDlyHMSM(0, 0, 0, 1);
+	}
+}
+
+void KalmanTask(void *p_arg)
+{
+	while (1)
+	{
+		INT32U tick1 = OSTimeGet();
+
+		// TODO: Kalman Filter
+
+		INT32U tick2 = OSTimeGet();
+		kalman_time = tick2 - tick1;
+
+		OSTimeDlyHMSM(0, 0, 0, 1);
+	}
+}
+
+void SendTask(void *p_arg)
+{
+	while (1)
+	{
+		INT32U tick1 = OSTimeGet();
+
+		int8_t data[12];
+
+		data[0] = (int8_t)(accx >> 8);
+		data[1] = (int8_t)(accx & 0xff);
+		data[2] = (int8_t)(accy >> 8);
+		data[3] = (int8_t)(accy & 0xff);
+		data[4] = (int8_t)(accz >> 8);
+		data[5] = (int8_t)(accz & 0xff);
+		data[6] = (int8_t)(gyrox >> 8);
+		data[7] = (int8_t)(gyrox & 0xff);
+		data[8] = (int8_t)(gyroy >> 8);
+		data[9] = (int8_t)(gyroy & 0xff);
+		data[10] = (int8_t)(gyroz >> 8);
+		data[11] = (int8_t)(gyroz & 0xff);
+		FANO_Send_ACC_GRY(data);
+
+		data[0] = (int8_t)(magx >> 8);
+		data[1] = (int8_t)(magx & 0xff);
+		data[2] = (int8_t)(magy >> 8);
+		data[3] = (int8_t)(magy & 0xff);
+		data[4] = (int8_t)(magz >> 8);
+		data[5] = (int8_t)(magz & 0xff);
+		FANO_Send_MAG(data);
+
+		INT32U tick2 = OSTimeGet();
+		send_time = tick2 - tick1;
+
+		OSTimeDlyHMSM(0, 0, 0, 1);
+	}
+}
+
+void OLEDTask(void *p_arg)
+{
+	int mode = 1;
+
+	while (1)
+	{
+		OLED_ShowString(1, 1, "T:");
+		OLED_ShowNum(1, 3, OSTime, 5);
+
+		OLED_ShowString(1, 9, "COS:");
+		OLED_ShowNum(1, 13, gy86_time, 4);
+
+		if (mode == 0)
+		{
+			OLED_ShowString(2, 1, "X");
+			OLED_ShowSignedNum(2, 2, accx, 4);
+			OLED_ShowSignedNum(2, 7, gyrox, 4);
+			OLED_ShowSignedNum(2, 12, magx, 4);
+
+			OLED_ShowString(3, 1, "Y");
+			OLED_ShowSignedNum(3, 2, accy, 4);
+			OLED_ShowSignedNum(3, 7, gyroy, 4);
+			OLED_ShowSignedNum(3, 12, magy, 4);
+
+			OLED_ShowString(4, 1, "Z");
+			OLED_ShowSignedNum(4, 2, accz, 4);
+			OLED_ShowSignedNum(4, 7, gyroz, 4);
+			OLED_ShowSignedNum(4, 12, magz, 4);
+		}
+		else if (mode == 1)
+		{
+			OLED_ShowNum(2, 1, dutyCycleArray[0], 3);
+			OLED_ShowNum(2, 5, dutyCycleArray[1], 3);
+			OLED_ShowNum(3, 1, dutyCycleArray[2], 3);
+			OLED_ShowNum(3, 5, dutyCycleArray[3], 3);
+			OLED_ShowNum(4, 1, dutyCycleArray[4], 3);
+			OLED_ShowNum(4, 5, dutyCycleArray[5], 3);
+		}
+
+		OSTimeDlyHMSM(0, 0, 0, 1);
+	}
+}
+
+/*
+*********************************************************************************************************
+*                                             500Hz TASKS
+*
+* Includes:
+* 1.InnerLoopTask
+* 2.MotorTask
+*********************************************************************************************************
+*/
+
+void InnerLoopTask(void *p_arg)
+{
+	while (1)
+	{
+		INT32U tick1 = OSTimeGet();
+
+		// TODO: Inner Loop
+
+		INT32U tick2 = OSTimeGet();
+		inner_loop_time = tick2 - tick1;
+
+		OSTimeDlyHMSM(0, 0, 0, 2);
+	}
+}
+
+void MotorTask(void *p_arg)
+{
+	while (1)
+	{
+		INT32U tick1 = OSTimeGet();
+
+		PWM_output();
+
+		INT32U tick2 = OSTimeGet();
+		motor_time = tick2 - tick1;
+
+		OSTimeDlyHMSM(0, 0, 0, 2);
+	}
+}
+
+/*
+*********************************************************************************************************
+*                                             250Hz TASKS
+*
+* Includes:
+* 1. OuterLoopTask
+* 2. BlinkTask
+*********************************************************************************************************
+*/
+
+void OuterLoopTask(void *p_arg)
+{
+	while (1)
+	{
+		INT32U tick1 = OSTimeGet();
+
+		// TODO: Outer Loop
+
+		INT32U tick2 = OSTimeGet();
+		outer_loop_time = tick2 - tick1;
+
+		OSTimeDlyHMSM(0, 0, 0, 4);
+	}
+}
+
+void BlinkTask(void *p_arg)
+{
+	BOOLEAN flag = 0;
+
+	while (1)
+	{
+		if (flag == 0)
+			LED_On();
+		else
+			LED_Off();
+
+		flag = !flag;
+
+		OSTimeDlyHMSM(0, 0, 0, 4);
 	}
 }

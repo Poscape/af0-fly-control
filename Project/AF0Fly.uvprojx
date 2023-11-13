@@ -429,6 +429,16 @@
               <FileType>5</FileType>
               <FilePath>..\User\tasks.h</FilePath>
             </File>
+            <File>
+              <FileName>ano.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\ano.c</FilePath>
+            </File>
+            <File>
+              <FileName>ano.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\ano.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

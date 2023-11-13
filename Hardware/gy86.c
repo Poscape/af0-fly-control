@@ -22,7 +22,7 @@ void GPIOB_I2C1_Init(uint8_t scl, uint8_t sda)
     GPIOB->OTYPER |= 0x1 << 1 * sda;
 }
 
-void MPU6050_Init(void)
+void GY86_Init(void)
 {
     I2C1_Init();
     I2C1_Write_7bitmode_Register(MPU6050_ADDR, MPU6050_PWR_MGMT_1, 0x00);
@@ -90,21 +90,21 @@ void I2C1_Init(void)
     I2C1->CR1 |= 0x1 << 10;
 }
 
-uint16_t I2C1_GetMPU6050X(void)
+uint16_t I2C1_GetAccX(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_XOUT_H) << 8) + I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_XOUT_L);
     return data;
 }
 
-uint16_t I2C1_GetMPU6050Y(void)
+uint16_t I2C1_GetAccY(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_YOUT_H) << 8) + I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_YOUT_L);
     return data;
 }
 
-uint16_t I2C1_GetMPU6050Z(void)
+uint16_t I2C1_GetAccZ(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_ZOUT_H) << 8) + I2C1_Read_7bitmode_Register(MPU6050_ADDR, MPU6050_ACCEL_ZOUT_L);
@@ -132,21 +132,21 @@ uint16_t I2C1_GetGyroZ(void)
     return data;
 }
 
-uint16_t I2C1_GetHMC5883X(void)
+uint16_t I2C1_GetMagX(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputXMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputXLSB);
     return data;
 }
 
-uint16_t I2C1_GetHMC5883Y(void)
+uint16_t I2C1_GetMagY(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputYMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputYLSB);
     return data;
 }
 
-uint16_t I2C1_GetHMC5883Z(void)
+uint16_t I2C1_GetMagZ(void)
 {
     uint16_t data = 0;
     data = (uint16_t)(I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputZMSB) << 8) + I2C1_Read_7bitmode_Register(HMC5883_Addr, OutputZLSB);

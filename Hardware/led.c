@@ -1,6 +1,6 @@
 #include "led.h"
 
-void InitLED(void)
+void LED_Init(void)
 {
 	RCC->AHB1ENR |= 0x1 << 0; /* GPIOA 时钟外设使能 6.3.12 */
 
