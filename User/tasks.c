@@ -32,13 +32,11 @@ INT32U gy86_time = 0;
 INT32U kalman_time = 0;
 INT32U send_time = 0;
 INT32U oled_time = 0;
-INT32U oled_time = 0;
 
 INT32U inner_loop_time = 0;
 INT32U motor_time = 0;
 
 INT32U outer_loop_time = 0;
-INT32U blink_time = 0;
 INT32U blink_time = 0;
 /* Time End */
 
@@ -260,7 +258,6 @@ void OuterLoopTask()
 
 void BlinkTask()
 {
-	INT32U tick1 = OSTimeGet();
 	BOOLEAN flag = 0;
 
 	INT32U tick1 = OSTimeGet();
