@@ -32,22 +32,21 @@ void FANO_Send_Data(int8_t *data)
 
 void FANO_Send_MAG(int8_t *data)
 {
-    // int16 MAG_X; int16 MAG_Y; int16 MAG_Z;
     int8_t tmp_data[14 + 2];
     tmp_data[0] = 0x02; // function code
     tmp_data[1] = 14;   // data length
-    tmp_data[2] = data[0];
-    tmp_data[3] = data[1]; // MAG_X
-    tmp_data[4] = data[2];
-    tmp_data[5] = data[3]; // MAG_Y
-    tmp_data[6] = data[4];
-    tmp_data[7] = data[5]; // MAG_Z
+    tmp_data[2] = data[14];
+    tmp_data[3] = data[15]; // MAG_X
+    tmp_data[4] = data[16];
+    tmp_data[5] = data[17]; // MAG_Y
+    tmp_data[6] = data[18];
+    tmp_data[7] = data[19]; // MAG_Z
     tmp_data[8] = 0;
     tmp_data[9] = 0;
     tmp_data[10] = 0;
     tmp_data[11] = 0; // ALT_BAR
-    tmp_data[12] = 0;
-    tmp_data[13] = 0; // TMP
+    tmp_data[12] = data[12];
+    tmp_data[13] = data[13]; // TMP
     tmp_data[14] = 0; // BAR_STA
     tmp_data[15] = 0; // MAG_STA
     FANO_Send_Data(tmp_data);

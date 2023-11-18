@@ -82,6 +82,8 @@
 void GY86_Init(void);
 void HMC5883Init(void);
 
+void I2C1_GetAll(int8_t *data);
+
 uint16_t I2C1_GetAccX(void);
 uint16_t I2C1_GetAccY(void);
 uint16_t I2C1_GetAccZ(void);
