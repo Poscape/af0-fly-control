@@ -64,7 +64,7 @@ void USARTInit(void)
 	/*** USART ***/
 	// USART1->BRR = 0x369d; // USARTDIV (Tx/Rx=fCK/16*USARTDIV) 19.6.3 / refer: p519
 	// USART1->BRR = 0x682; // USARTDIV (Tx/Rx=fCK/16*USARTDIV) 19.6.3 / refer: p519
-	USART1->BRR = 0x222E;
+	USART1->BRR = 0x2d9;
 
 	USART1->CR3 &= (unsigned int)~(0x1 << 9); // disable CTS hardware flow 0 19.6.6
 	USART1->CR3 &= (unsigned int)~(0x1 << 8); // disable RTS hardware flow 0 19.6.6

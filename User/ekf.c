@@ -25,6 +25,13 @@ float32_t Q_data[49] = {0.0f};
 float32_t R_data[36] = {0.0f};
 float32_t Z_k_data[6] = {0.0f};
 
+int16_t ACC_OFFSET_X = 0;
+int16_t ACC_OFFSET_Y = 0;
+int16_t ACC_OFFSET_Z = 0;
+int16_t GYRO_OFFSET_X = 0;
+int16_t GYRO_OFFSET_Y = 0;
+int16_t GYRO_OFFSET_Z = 0;
+
 // void Send_Quaternion_Data()
 // {
 //     FANO_Send_Data(Frame_Quaternion, (uint8_t *)ano_data);
@@ -227,19 +234,19 @@ void ekf_update()
     magy = magy_raw * MAG_RATIO;
     magz = magz_raw * MAG_RATIO;
 
-    // ano_mpu_data -> data[0] = accx_raw & 0xff;
-    // ano_mpu_data -> data[1] = (accx_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[2] = accy_raw & 0xff;
-    // ano_mpu_data -> data[3] = (accy_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[4] = accz_raw & 0xff;
-    // ano_mpu_data -> data[5] = (accz_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[6] = gyrox_raw & 0xff;
-    // ano_mpu_data -> data[7] = (gyrox_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[8] = gyroy_raw & 0xff;
-    // ano_mpu_data -> data[9] = (gyroy_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[10] = gyroz_raw & 0xff;
-    // ano_mpu_data -> data[11] = (gyroz_raw >> 8) & 0xff;
-    // ano_mpu_data -> data[12] = 0;
+    ano_mpu_data -> data[0] = accx_raw & 0xff;
+    ano_mpu_data -> data[1] = (accx_raw >> 8) & 0xff;
+    ano_mpu_data -> data[2] = accy_raw & 0xff;
+    ano_mpu_data -> data[3] = (accy_raw >> 8) & 0xff;
+    ano_mpu_data -> data[4] = accz_raw & 0xff;
+    ano_mpu_data -> data[5] = (accz_raw >> 8) & 0xff;
+    ano_mpu_data -> data[6] = gyrox_raw & 0xff;
+    ano_mpu_data -> data[7] = (gyrox_raw >> 8) & 0xff;
+    ano_mpu_data -> data[8] = gyroy_raw & 0xff;
+    ano_mpu_data -> data[9] = (gyroy_raw >> 8) & 0xff;
+    ano_mpu_data -> data[10] = gyroz_raw & 0xff;
+    ano_mpu_data -> data[11] = (gyroz_raw >> 8) & 0xff;
+    ano_mpu_data -> data[12] = 0;
     // FANO_Send_Data(0x01, (uint8_t *)ano_mpu_data);
 
     // print_var(gyrox, "gyrox");

@@ -90,10 +90,12 @@ void GY86Task()
 	accx_read = (int16_t)((data[0] << 8) + data[1]);
 	accy_read = (int16_t)((data[2] << 8) + data[3]);
 	accz_read = (int16_t)((data[4] << 8) + data[5]);
-	gyrox_read = (int16_t)((data[6] << 8) + data[7]);
-	gyroy_read = (int16_t)((data[8] << 8) + data[9]);
-	gyroz_read = (int16_t)((data[10] << 8) + data[11]);
-	tmp = (int16_t)((data[12] << 8) + data[13]);
+	tmp = (int16_t)((data[6] << 8) + data[7]) * 10;
+	gyrox_read = (int16_t)((data[8] << 8) + data[9]);
+	gyroy_read = (int16_t)((data[10] << 8) + data[11]);
+	// gyroz_read = (int16_t)((data[12] << 8) + data[13]);
+	gyroz_read = (int16_t) I2C1_GetGyroZ();
+	
 	magx_read = (int16_t)((data[14] << 8) + data[15]);
 	magy_read = (int16_t)((data[16] << 8) + data[17]);
 	magz_read = (int16_t)((data[18] << 8) + data[19]);
@@ -116,8 +118,11 @@ void SendTask()
 {
 	INT32U tick1 = OSTimeGet();
 
-	FANO_Send_ACC_GRY(data);
-	FANO_Send_MAG(data);
+	FANO_Send_Data(0x01, (uint8_t *)ano_mpu_data);
+	// FANO_Send_MAG(data);
+	FANO_Send_Data(Frame_Quaternion, (uint8_t *)ano_data);
+	// FANO_Send_Data(Frame_EulerAngle, (uint8_t *)ano_data_euler);
+
 
 	INT32U tick2 = OSTimeGet();
 	send_time = tick2 - tick1;
