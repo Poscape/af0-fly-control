@@ -8,4 +8,7 @@ void FANO_Send_Data(int8_t *data);
 void FANO_Send_MAG(int8_t *data);
 void FANO_Send_ACC_GRY(int8_t *data);
 
+#define Frame_EulerAngle 0x03
+#define Frame_Quaternion 0x04
+
 #endif

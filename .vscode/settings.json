@@ -3,6 +3,15 @@
     "files.associations": {
         "stm32f4xx.h": "c",
         "tasks.h": "c",
-        "__config": "c"
+        "__config": "c",
+        "ekf.h": "c",
+        "os_cfg.h": "c",
+        "ano.h": "c",
+        "math.h": "c",
+        "usart.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c",
+        "gy86.h": "c",
+        "i2c.h": "c"
     }
 }

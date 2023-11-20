@@ -34,6 +34,7 @@ void InitTask(void *p_arg)
 	OLED_Init();
 	Motor_Init();
 	LED_Init();
+	ekf_init();
 
 	OSTaskCreate(Task1000HZ, NULL, &Task1000HZStk[599], 2);
 	// OSTaskCreate(GY86Task, NULL, &GY86TaskStk[99], 2);

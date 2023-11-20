@@ -13,6 +13,7 @@
 #include "gy86.h"
 #include "i2c.h"
 #include "ano.h"
+#include "ekf.h"
 
 extern int dutyCycleArray[6];
 
@@ -34,6 +35,10 @@ extern OS_STK Task250HZStk[];
 
 extern INT8U OSPrioCur;
 extern INT8U OSPrioHighRdy;
+
+extern int16_t accx_read, accy_read, accz_read;
+extern int16_t gyrox_read, gyroy_read, gyroz_read;
+extern int16_t magx_read, magy_read, magz_read;
 
 // 1000Hz Tasks
 void Task1000HZ(void *p_arg);

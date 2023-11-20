@@ -1,8 +1,8 @@
 #include "tasks.h"
 
-int16_t accx = 0, accy = 0, accz = 0;
-int16_t gyrox = 0, gyroy = 0, gyroz = 0;
-int16_t magx = 0, magy = 0, magz = 0;
+int16_t accx_read = 0, accy_read = 0, accz_read = 0;
+int16_t gyrox_read = 0, gyroy_read = 0, gyroz_read = 0;
+int16_t magx_read = 0, magy_read = 0, magz_read = 0;
 int16_t tmp = 0;
 
 // int8_t data[18] = {0};
@@ -87,16 +87,16 @@ void GY86Task()
 	INT32U tick1 = OSTimeGet();
 
 	I2C1_GetAll(data);
-	accx = (int16_t)((data[0] << 8) + data[1]);
-	accy = (int16_t)((data[2] << 8) + data[3]);
-	accz = (int16_t)((data[4] << 8) + data[5]);
-	gyrox = (int16_t)((data[6] << 8) + data[7]);
-	gyroy = (int16_t)((data[8] << 8) + data[9]);
-	gyroz = (int16_t)((data[10] << 8) + data[11]);
+	accx_read = (int16_t)((data[0] << 8) + data[1]);
+	accy_read = (int16_t)((data[2] << 8) + data[3]);
+	accz_read = (int16_t)((data[4] << 8) + data[5]);
+	gyrox_read = (int16_t)((data[6] << 8) + data[7]);
+	gyroy_read = (int16_t)((data[8] << 8) + data[9]);
+	gyroz_read = (int16_t)((data[10] << 8) + data[11]);
 	tmp = (int16_t)((data[12] << 8) + data[13]);
-	magx = (int16_t)((data[14] << 8) + data[15]);
-	magy = (int16_t)((data[16] << 8) + data[17]);
-	magz = (int16_t)((data[18] << 8) + data[19]);
+	magx_read = (int16_t)((data[14] << 8) + data[15]);
+	magy_read = (int16_t)((data[16] << 8) + data[17]);
+	magz_read = (int16_t)((data[18] << 8) + data[19]);
 
 	INT32U tick2 = OSTimeGet();
 	gy86_time = tick2 - tick1;
@@ -106,7 +106,7 @@ void KalmanTask()
 {
 	INT32U tick1 = OSTimeGet();
 
-	// TODO: Kalman Filter
+	ekf_calculate();
 
 	INT32U tick2 = OSTimeGet();
 	kalman_time = tick2 - tick1;
@@ -135,19 +135,19 @@ void OLEDTask()
 		OLED_ShowNum(1, 3, OSTime, 5);
 
 		OLED_ShowString(2, 1, "X");
-		OLED_ShowSignedNum(2, 2, accx, 4);
-		OLED_ShowSignedNum(2, 7, gyrox, 4);
-		OLED_ShowSignedNum(2, 12, magx, 4);
+		OLED_ShowSignedNum(2, 2, accx_read, 4);
+		OLED_ShowSignedNum(2, 7, gyrox_read, 4);
+		OLED_ShowSignedNum(2, 12, magx_read, 4);
 
 		OLED_ShowString(3, 1, "Y");
-		OLED_ShowSignedNum(3, 2, accy, 4);
-		OLED_ShowSignedNum(3, 7, gyroy, 4);
-		OLED_ShowSignedNum(3, 12, magy, 4);
+		OLED_ShowSignedNum(3, 2, accy_read, 4);
+		OLED_ShowSignedNum(3, 7, gyroy_read, 4);
+		OLED_ShowSignedNum(3, 12, magy_read, 4);
 
 		OLED_ShowString(4, 1, "Z");
-		OLED_ShowSignedNum(4, 2, accz, 4);
-		OLED_ShowSignedNum(4, 7, gyroz, 4);
-		OLED_ShowSignedNum(4, 12, magz, 4);
+		OLED_ShowSignedNum(4, 2, accz_read, 4);
+		OLED_ShowSignedNum(4, 7, gyroz_read, 4);
+		OLED_ShowSignedNum(4, 12, magz_read, 4);
 	}
 	else if (mode == 1) // Motor Mode
 	{
