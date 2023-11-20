@@ -19,12 +19,17 @@
 #define GYRO_RATIO 4000.0f / 65536.0f / 180.0f * PI
 // #define MAG_RATIO 1/1090.0f
 #define MAG_RATIO 1.0f
-#define ACC_OFFSET_X -2085 + 2048 + 230
-#define ACC_OFFSET_Y 46 - 9
-#define ACC_OFFSET_Z 192
-#define GYRO_OFFSET_X -56 - 8 + 3-7+2
-#define GYRO_OFFSET_Y -63 - 70+1
-#define GYRO_OFFSET_Z -8 + 5+1
+extern int16_t ACC_OFFSET_X;
+extern int16_t ACC_OFFSET_Y;
+extern int16_t ACC_OFFSET_Z;
+extern int16_t GYRO_OFFSET_X;
+extern int16_t GYRO_OFFSET_Y;
+extern int16_t GYRO_OFFSET_Y;
+extern int16_t GYRO_OFFSET_Z;
+
+
+
+
 
 typedef struct EKF_input
 {
@@ -53,6 +58,10 @@ typedef struct ANO_MPU_data
     int8_t len;
     int8_t data[13];
 } ANO_MPU_data;
+
+extern ANO_data_euler *ano_data_euler;
+extern ANO_MPU_data *ano_mpu_data;
+extern ANO_data *ano_data;
 
 void ekf_init(void);
 void ekf_calculate(void);
